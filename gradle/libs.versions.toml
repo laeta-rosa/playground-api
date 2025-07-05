@@ -1,0 +1,33 @@
+[versions]
+plugin-dependency-management = "1.1.7"
+plugin-spring-boot = "3.5.3"
+
+postgresql = "42.7.7"
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "plugin-spring-boot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "plugin-dependency-management" }
+
+[libraries]
+processor-lombok = { group = "org.projectlombok", name = "lombok" }
+
+database-postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "postgresql" }
+
+spring-boot-starter = { group = "org.springframework.boot", name = "spring-boot-starter" }
+spring-boot-starter-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa" }
+spring-boot-starter-validation = { group = "org.springframework.boot", name = "spring-boot-starter-validation" }
+spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web" }
+
+[bundles]
+database = [
+    "database-postgresql"
+]
+processor = [
+    "processor-lombok"
+]
+spring = [
+    "spring-boot-starter",
+    "spring-boot-starter-jpa",
+    "spring-boot-starter-validation",
+    "spring-boot-starter-web"
+]

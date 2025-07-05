@@ -1,0 +1,26 @@
+plugins {
+    id("java")
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
+}
+
+group = "org.mtech"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(libs.bundles.database)
+    implementation(libs.bundles.spring)
+    implementation(libs.bundles.processor)
+    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+
+    annotationProcessor(libs.processor.lombok)
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
