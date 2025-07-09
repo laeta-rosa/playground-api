@@ -57,6 +57,7 @@ public class KidAddResponseMapper {
                 .ticketNumber(kid.getTicketNumber())
                 .name(kid.getName())
                 .age(kid.getAge())
+                .status(kid.getStatus())
                 .ticketDateTime(kid.getTicketDateTime())
                 .build();
     }

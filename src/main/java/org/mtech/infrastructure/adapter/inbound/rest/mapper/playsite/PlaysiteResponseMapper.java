@@ -1,12 +1,9 @@
 package org.mtech.infrastructure.adapter.inbound.rest.mapper.playsite;
 
 import lombok.experimental.UtilityClass;
-import org.mtech.infrastructure.adapter.inbound.rest.api.response.playsite.PlaysiteAddResponse;
-import org.mtech.infrastructure.adapter.inbound.rest.api.response.playsite.PlaysiteRemoveResponse;
-import org.mtech.infrastructure.adapter.inbound.rest.api.response.playsite.PlaysiteResponse;
-import org.mtech.infrastructure.adapter.inbound.rest.api.response.playsite.PlaysitesResponse;
+import org.mtech.infrastructure.adapter.inbound.rest.api.response.playsite.*;
 import org.mtech.application.playsite.add.PlaysiteAddCommandResult.PlaysiteAdded;
-import org.mtech.application.playsite.query.PlaysitesQueryResult.PlaysitesResult;
+import org.mtech.application.playsite.query.PlaysitesQueryResult.PlaysitesFound;
 import org.mtech.application.playsite.remove.PlaysiteRemoveCommandResult.PlaysiteNotFound;
 import org.mtech.application.playsite.remove.PlaysiteRemoveCommandResult.PlaysiteRemoved;
 import org.mtech.domain.Playsite;
@@ -28,7 +25,7 @@ public class PlaysiteResponseMapper {
         return new PlaysitesResponse(emptyList());
     }
 
-    public static PlaysitesResponse toResponse(PlaysitesResult queryResult) {
+    public static PlaysitesResponse toResponse(PlaysitesFound queryResult) {
         return PlaysitesResponse.builder()
             .playsites(toPlaysites(queryResult.playsites()))
             .build();
@@ -67,6 +64,12 @@ public class PlaysiteResponseMapper {
                 .id(playsite.getId())
                 .attractions(toAttractions(playsite.getAttractions()))
                 .kids(toResponseKids(playsite.getKids()))
+                .build();
+    }
+
+    public static PlaysiteUtilizationResponse toResponse(String utilizationPercentage) {
+        return PlaysiteUtilizationResponse.builder()
+                .utilization(utilizationPercentage)
                 .build();
     }
 

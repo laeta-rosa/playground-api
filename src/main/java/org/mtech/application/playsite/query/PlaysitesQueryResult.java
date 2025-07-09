@@ -6,7 +6,7 @@ import java.util.List;
 
 public sealed interface PlaysitesQueryResult {
 
-    record PlaysitesResult(List<Playsite> playsites) implements PlaysitesQueryResult {}
+    record PlaysitesFound(List<Playsite> playsites) implements PlaysitesQueryResult {}
 
     record PlaysitesNotFound() implements PlaysitesQueryResult {}
 

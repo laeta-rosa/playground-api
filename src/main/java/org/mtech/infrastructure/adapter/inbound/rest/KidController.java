@@ -46,7 +46,7 @@ public class KidController {
     }
 
     @OpenAPI.RemoveKid
-    @PostMapping("/kids:remove")
+    @DeleteMapping("/kids:remove")
     public KidRemoveResponse removeKid(@Valid @RequestBody KidRemoveRequest request) {
         var result = kidRemoveUseCase.invoke(toCommand(request));
 

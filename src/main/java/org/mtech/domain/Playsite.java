@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.UUID.randomUUID;
+import static org.mtech.domain.vo.KidStatus.PLAYING;
 import static org.mtech.domain.vo.KidStatus.WAITING;
 
 @Entity
@@ -71,6 +72,12 @@ public class Playsite {
     public List<Kid> getKidsQueue() {
         return kids.stream()
                 .filter(kid -> WAITING.equals(kid.getStatus()))
+                .toList();
+    }
+
+    public List<Kid> getPlayingKids() {
+        return kids.stream()
+                .filter(kid -> PLAYING.equals(kid.getStatus()))
                 .toList();
     }
 

@@ -48,7 +48,7 @@ public class AttractionController {
     }
 
     @OpenAPI.RemoveAttraction
-    @PostMapping("/attractions:remove")
+    @DeleteMapping("/attractions:remove")
     public AttractionRemoveResponse removeAttraction(@Valid @RequestBody AttractionRemoveRequest request) {
         var result = attractionRemoveUseCase.invoke(toCommand(request));
 

@@ -3,6 +3,7 @@ package org.mtech.infrastructure.adapter.inbound.rest.api.response.kid;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.NonNull;
+import org.mtech.domain.vo.KidStatus;
 
 import java.time.LocalDateTime;
 
@@ -19,6 +20,7 @@ public record KidAddResponse(
             @NonNull String ticketNumber,
             @NonNull LocalDateTime ticketDateTime,
             @NonNull String name,
+            @NonNull KidStatus status,
             Integer age
     ) {}
 
