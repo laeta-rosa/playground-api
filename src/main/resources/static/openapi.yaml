@@ -1,0 +1,298 @@
+openapi: 3.0.1
+info:
+  title: Playground API
+  version: 1.0-SNAPSHOT
+tags:
+  - name: Attractions
+    description: Manage attractions in playsites
+  - name: Kids
+    description: Manage kids in playsites
+  - name: Playsites
+    description: Query playsites and their utilization
+  - name: Playground
+    description: Manage playsites and query total kid count
+
+paths:
+  /playsite/{playsiteId}/attractions:add:
+    post:
+      summary: Adds an attraction to the playsite
+      tags:
+        - Attractions
+      parameters:
+        - in: path
+          name: playsiteId
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+      requestBody:
+        description: Attraction to add to the playsite
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttractionAddRequest'
+            examples:
+              attractionNameAndCount:
+                value:
+                  attraction:
+                    name: slide
+                    count: 1
+      responses:
+        '200':
+          description: Success
+  /playsite/attractions:remove:
+    delete:
+      summary: Removes an attraction from the playsite
+      tags:
+        - Attractions
+      requestBody:
+        description: Attraction to remove from the playsite
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttractionRemoveRequest'
+            examples:
+              attractionId:
+                value:
+                  id: 1
+      responses:
+        '200':
+          description: Success
+  /playsite/{playsiteId}/attractions:removeAll:
+    delete:
+      summary: Removes all attractions from the playsite
+      tags:
+        - Attractions
+      parameters:
+        - in: path
+          name: playsiteId
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        '200':
+          description: Success
+
+  /playsite/{playsiteId}/kids:add:
+    post:
+      summary: Adds a kid to the playsite
+      tags:
+        - Kids
+      parameters:
+        - in: path
+          name: playsiteId
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+      requestBody:
+        description: Kid to add to the playsite
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KidAddRequest'
+            examples:
+              kidNameAndAge:
+                value:
+                  kid:
+                    name: Andrew
+                    age: 3
+      responses:
+        '200':
+          description: Success
+  /playsite/kids:remove:
+    delete:
+      summary: Removes a kid from the playsite
+      tags:
+        - Kids
+      requestBody:
+        description: Kid to remove from the playsite
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KidRemoveRequest'
+            examples:
+              kidTicketNumber:
+                value:
+                  ticketNumber: f83161cb-8465-4dde-ac9a-9d036db84cea
+      responses:
+        '200':
+          description: Success
+
+  /playsites:
+    get:
+      summary: Gets list of playsites
+      tags:
+        - Playground
+      responses:
+        '200':
+          description: Success
+  /playsites:add:
+    post:
+      summary: Adds a playsite with list of attractions
+      tags:
+        - Playground
+      requestBody:
+        description: Playsite to add to the playground
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaysiteAddRequest'
+            examples:
+              playsiteAttractions:
+                value:
+                  attractions:
+                    - name: slide
+                      count: 1
+                    - name: double swing
+                      count: 2
+                    - name: carousel
+                      count: 1
+      responses:
+        '200':
+          description: Success
+  /playsites:addDefault:
+    post:
+      summary: Adds a playsite with default list of attractions
+      tags:
+        - Playground
+      responses:
+        '200':
+          description: Success
+  /playsites:remove:
+    delete:
+      summary: Removes a playsite from the playground
+      tags:
+        - Playground
+      requestBody:
+        description: Playsite to remove from the playground
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaysiteRemoveRequest'
+            examples:
+              playsiteId:
+                value:
+                  id: 1
+      responses:
+        '200':
+          description: Success
+  /kids:count:
+    get:
+      summary: Calculates a total count of kids visiting the playground
+      tags:
+        - Playground
+      responses:
+        '200':
+          description: Success
+
+  /playsite/{playsiteId}:
+    get:
+      summary: Gets playsite's attractions and kids attending
+      tags:
+        - Playsites
+      parameters:
+        - in: path
+          name: playsiteId
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        '200':
+          description: Success
+  /playsite/{playsiteId}/utilization:
+    get:
+      summary: Gets playsite's utilization percentage
+      tags:
+        - Playsites
+      parameters:
+        - in: path
+          name: playsiteId
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        '200':
+          description: Success
+
+components:
+  schemas:
+    AttractionAddRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+            - slide
+            - double swings
+            - carousel
+            - ball pit
+          example: slide
+        count:
+          type: integer
+          format: int32
+          minimum: 1
+          example: 1
+      required:
+        - name
+        - count
+    AttractionRemoveRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 0
+          example: 1
+      required:
+        - id
+    KidAddRequest:
+      type: object
+      properties:
+        kid:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Andrew
+            age:
+              type: integer
+              minimum: 0
+              example: 3
+          required:
+            - name
+            - age
+      required:
+        - kid
+    KidRemoveRequest:
+      type: object
+      properties:
+        ticketNumber:
+          type: string
+          example: f83161cb-8465-4dde-ac9a-9d036db84cea
+      required:
+        - ticketNumber
+    PlaysiteAddRequest:
+      type: object
+      properties:
+        attractions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttractionAddRequest'
+    PlaysiteRemoveRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 0
+          example: 1
+      required:
+        - id

@@ -29,6 +29,6 @@ public record KidAddResponse(
         QUEUED,
         REFUSED_QUEUE,
         QUEUE_FULL,
-        PLAYSITE_NOT_FOUND
+        PLAYSITE_OR_ATTRACTION_NOT_FOUND
     }
 }

@@ -1,9 +1,7 @@
 package org.mtech.infrastructure.adapter.inbound.rest;
 
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.UtilityClass;
 import org.mtech.application.kid.count.KidsCountQueryResult.KidsCountCalculated;
 import org.mtech.application.kid.count.KidsCountQueryUseCase;
 import org.mtech.infrastructure.adapter.inbound.rest.api.request.playsite.PlaysiteAddRequest;
@@ -38,7 +36,6 @@ public class PlaygroundController {
     private final PlaysitesQueryUseCase playsitesQueryUseCase;
     private final KidsCountQueryUseCase kidsCountQueryUseCase;
 
-    @OpenAPI.GetPlaysites
     @GetMapping("/playsites")
     public PlaysitesResponse getPlaysites() {
         var result = playsitesQueryUseCase.invoke();
@@ -49,9 +46,8 @@ public class PlaygroundController {
         };
     }
 
-    @OpenAPI.AddPlaysite
     @PostMapping("/playsites:add")
-    public PlaysiteAddResponse addPlaysite(@Valid @RequestBody PlaysiteAddRequest request) {
+    public PlaysiteAddResponse addPlaysite(@RequestBody PlaysiteAddRequest request) {
         var result = playsiteAddUseCase.invoke(toCommand(request));
 
         return switch (result) {
@@ -60,7 +56,6 @@ public class PlaygroundController {
         };
     }
 
-    @OpenAPI.AddDefaultPlaysite
     @PostMapping("/playsites:addDefault")
     public PlaysiteAddResponse addDefaultPlaysite() {
         var result = playsiteAddUseCase.invoke(toDefaultCommand());
@@ -71,7 +66,6 @@ public class PlaygroundController {
         };
     }
 
-    @OpenAPI.RemovePlaysite
     @DeleteMapping("/playsites:remove")
     public PlaysiteRemoveResponse removePlaysite(@Valid @RequestBody PlaysiteRemoveRequest request) {
         var result = playsiteRemoveUseCase.invoke(toCommand(request));
@@ -82,44 +76,13 @@ public class PlaygroundController {
         };
     }
 
-    @OpenAPI.GetTotalKidCount
-    @GetMapping("/kids/count")
+    @GetMapping("/kids:count")
     public KidsTotalCountResponse getKidsCount() {
         var result = kidsCountQueryUseCase.invoke();
 
         return switch (result) {
             case KidsCountCalculated p -> toResponse(p);
         };
-    }
-
-    @UtilityClass
-    private static class OpenAPI {
-
-        @Operation(
-                summary = "Returns a list of the playground's playsites"
-        )
-        @interface GetPlaysites {}
-
-        @Operation(
-                summary = "Adds a playsite to the playground"
-        )
-        @interface AddPlaysite {}
-
-        @Operation(
-                summary = "Adds a default playsite to the playground"
-        )
-        @interface AddDefaultPlaysite {}
-
-        @Operation(
-                summary = "Removes a playsite from the playground"
-        )
-        @interface RemovePlaysite {}
-
-        @Operation(
-                summary = "Returns a total count of kids visiting the playground"
-        )
-        @interface GetTotalKidCount {}
-
     }
 
 }

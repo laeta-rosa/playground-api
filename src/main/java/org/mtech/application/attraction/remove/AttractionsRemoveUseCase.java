@@ -5,7 +5,6 @@ import org.mtech.application.attraction.remove.AttractionsRemoveCommandResult.At
 import org.mtech.application.attraction.remove.AttractionsRemoveCommandResult.PlaysiteToRemoveAttractionsNotFound;
 import org.mtech.application.usecase.CommandUseCase;
 import org.mtech.domain.Playsite;
-import org.mtech.domain.vo.PlaysiteId;
 import org.mtech.infrastructure.adapter.outbound.database.repository.PlaysiteRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,16 +20,18 @@ public class AttractionsRemoveUseCase implements CommandUseCase<AttractionsRemov
     public AttractionsRemoveCommandResult invoke(AttractionsRemoveCommand command) {
         var playsite = repository.findById(command.id().value());
         return playsite
-                .map(this::removeAttractions)
-                .orElseGet(PlaysiteToRemoveAttractionsNotFound::new);
+                .map(p -> {
+                    removeAttractions(p);
+                    return (AttractionsRemoveCommandResult) new AttractionsRemoved(command.id());
+                })
+                .orElseGet(() -> new PlaysiteToRemoveAttractionsNotFound(command.id()));
     }
 
-    private AttractionsRemoveCommandResult removeAttractions(Playsite playsite) {
+    private void removeAttractions(Playsite playsite) {
         playsite.getAttractions().clear();
         playsite.getKids().clear();
         playsite.setCapacity(0);
         repository.save(playsite);
-        return new AttractionsRemoved(PlaysiteId.of(playsite.getId()));
     }
 
 }

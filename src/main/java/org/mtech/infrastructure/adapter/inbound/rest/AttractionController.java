@@ -1,9 +1,7 @@
 package org.mtech.infrastructure.adapter.inbound.rest;
 
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.UtilityClass;
 import org.mtech.application.attraction.add.AttractionAddCommandResult.AttractionAdded;
 import org.mtech.application.attraction.add.AttractionAddCommandResult.PlaysiteAttractionCapacityExceeded;
 import org.mtech.application.attraction.add.AttractionAddCommandResult.PlaysiteToAddAttractionNotFound;
@@ -35,9 +33,11 @@ public class AttractionController {
     private final AttractionRemoveUseCase attractionRemoveUseCase;
     private final AttractionsRemoveUseCase attractionsRemoveUseCase;
 
-    @OpenAPI.AddAttraction
     @PostMapping("/{playsiteId}/attractions:add")
-    public AttractionAddResponse addAttraction(@PathVariable Long playsiteId, @Valid @RequestBody AttractionAddRequest request) {
+    public AttractionAddResponse addAttraction(
+            @PathVariable Long playsiteId,
+            @Valid @RequestBody AttractionAddRequest request
+    ) {
         var result = attractionAddUseCase.invoke(toCommand(request, playsiteId));
 
         return switch (result) {
@@ -47,9 +47,10 @@ public class AttractionController {
         };
     }
 
-    @OpenAPI.RemoveAttraction
     @DeleteMapping("/attractions:remove")
-    public AttractionRemoveResponse removeAttraction(@Valid @RequestBody AttractionRemoveRequest request) {
+    public AttractionRemoveResponse removeAttraction(
+            @Valid @RequestBody AttractionRemoveRequest request
+    ) {
         var result = attractionRemoveUseCase.invoke(toCommand(request));
 
         return switch (result) {
@@ -58,8 +59,7 @@ public class AttractionController {
         };
     }
 
-    @OpenAPI.RemoveAllAttractions
-    @PostMapping("/{playsiteId}/attractions:removeAll")
+    @DeleteMapping("/{playsiteId}/attractions:removeAll")
     public AttractionsRemoveResponse removeAllAttractions(@PathVariable Long playsiteId) {
         var result = attractionsRemoveUseCase.invoke(toCommand(playsiteId));
 
@@ -67,26 +67,6 @@ public class AttractionController {
             case AttractionsRemoved a -> toResponse(a.id().value());
             case PlaysiteToRemoveAttractionsNotFound ignored -> toResponse();
         };
-    }
-
-    @UtilityClass
-    private static class OpenAPI {
-
-        @Operation(
-                summary = "Adds an attraction to the playsite. Allowed attractions are double swings, carousel, slide, ball pit"
-        )
-        @interface AddAttraction {}
-
-        @Operation(
-                summary = "Removes an attraction from the playsite"
-        )
-        @interface RemoveAttraction {}
-
-        @Operation(
-                summary = "Removes all attractions from the playsite"
-        )
-        @interface RemoveAllAttractions {}
-
     }
 
 }

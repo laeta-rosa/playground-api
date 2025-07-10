@@ -6,6 +6,6 @@ public sealed interface AttractionsRemoveCommandResult {
 
     record AttractionsRemoved(PlaysiteId id) implements AttractionsRemoveCommandResult {}
 
-    record PlaysiteToRemoveAttractionsNotFound() implements AttractionsRemoveCommandResult {}
+    record PlaysiteToRemoveAttractionsNotFound(PlaysiteId id) implements AttractionsRemoveCommandResult {}
 
 }

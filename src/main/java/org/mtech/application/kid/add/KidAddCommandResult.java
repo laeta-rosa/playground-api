@@ -12,6 +12,8 @@ public sealed interface KidAddCommandResult {
 
     record QueueFull() implements KidAddCommandResult {}
 
+    record PlaysiteHasNoAttractionsToAddKid() implements KidAddCommandResult {}
+
     record PlaysiteToAddKidNotFound() implements KidAddCommandResult {}
 
 }

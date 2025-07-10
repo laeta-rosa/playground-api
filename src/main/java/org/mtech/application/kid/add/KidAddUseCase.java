@@ -6,6 +6,7 @@ import org.mtech.domain.Playsite;
 import org.mtech.application.kid.add.KidAddCommandResult.KidPlaying;
 import org.mtech.application.kid.add.KidAddCommandResult.KidRefusedToWait;
 import org.mtech.application.kid.add.KidAddCommandResult.KidWaiting;
+import org.mtech.application.kid.add.KidAddCommandResult.PlaysiteHasNoAttractionsToAddKid;
 import org.mtech.application.kid.add.KidAddCommandResult.PlaysiteToAddKidNotFound;
 import org.mtech.application.kid.add.KidAddCommandResult.QueueFull;
 import org.mtech.application.usecase.CommandUseCase;
@@ -28,16 +29,19 @@ public class KidAddUseCase implements CommandUseCase<KidAddCommand, KidAddComman
     @Override
     @Transactional
     public KidAddCommandResult invoke(KidAddCommand command) {
-        System.out.println("Trying to fetch" + command.id().value());
         return repository.findById(command.id().value())
                 .map(playsite -> tryAddKid(playsite, command))
                 .orElseGet(PlaysiteToAddKidNotFound::new);
     }
 
     private KidAddCommandResult tryAddKid(Playsite playsite, KidAddCommand command) {
+        if (playsite.getAttractions().isEmpty()) {
+            return new PlaysiteHasNoAttractionsToAddKid();
+        }
         if (playsite.getKids().size() < playsite.getCapacity()) {
             return addKid(playsite, command.kid(), PLAYING);
-        } else if (command.acceptQueue()) {
+        }
+        if (command.acceptQueue()) {
             return addKid(playsite, command.kid(), WAITING);
         }
         return new KidRefusedToWait();

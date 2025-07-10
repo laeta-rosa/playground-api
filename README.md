@@ -23,11 +23,13 @@ The project requires the following components to be installed on the computer:
 ```
 docker-compose up --build
 ```
-2. Once the application has started, call the request the API over either  
+2. Once the application has started, call the request API over either  
 - **Swagger** -> http://localhost:8088/swagger-ui/index.html#/ (recommended as contains the API description)
 - **Postman** or similar API platform
-
-3. Call POST request to initialize a playsite with default set of attractions `POST /playsites:addDefault` 
+3. Call POST request to initialize a playsite with default set of attractions
+```
+POST /playsites:addDefault 
+```
 4. Proceed with playsites adding/removing/editing by calling described requests
 
 

@@ -30,7 +30,7 @@ public class KidAddResponseMapper {
 
     public static KidAddResponse toEmptyResponse() {
         return KidAddResponse.builder()
-                .status(PLAYSITE_NOT_FOUND)
+                .status(PLAYSITE_OR_ATTRACTION_NOT_FOUND)
                 .build();
     }
 

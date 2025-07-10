@@ -1,8 +1,6 @@
 package org.mtech.infrastructure.adapter.inbound.rest;
 
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.UtilityClass;
 import org.mtech.application.playsite.query.PlaysiteQueryUseCase;
 import org.mtech.application.playsite.utilization.CalculatePlaysiteUtilizationCommandResult.UtilizationCalculated;
 import org.mtech.application.playsite.utilization.CalculatePlaysiteUtilizationCommandResult.PlaysiteToCalculateUtilizationNotFound;
@@ -24,7 +22,6 @@ public class PlaysiteController {
     private final PlaysiteQueryUseCase playsiteQueryUseCase;
     private final CalculatePlaysiteUtilizationCommandUseCase calculatePlaysiteUtilizationCommandUseCase;
 
-    @OpenAPI.GetPlaysite
     @GetMapping("/{playsiteId}")
     public PlaysiteResponse getPlaysite(@PathVariable Long playsiteId) {
         var result = playsiteQueryUseCase.invoke(toQuery(playsiteId));
@@ -35,7 +32,6 @@ public class PlaysiteController {
         };
     }
 
-    @OpenAPI.GetPlaysiteUtilization
     @GetMapping("/{playsiteId}/utilization")
     public PlaysiteUtilizationResponse getPlaysiteUtilization(@PathVariable Long playsiteId) {
         var result = calculatePlaysiteUtilizationCommandUseCase.invoke(toQuery(playsiteId));
@@ -44,21 +40,6 @@ public class PlaysiteController {
             case UtilizationCalculated u -> toResponse(u.utilization().toString());
             case PlaysiteToCalculateUtilizationNotFound ignored -> null;
         };
-    }
-
-    @UtilityClass
-    private static class OpenAPI {
-
-        @Operation(
-                summary = "Returns a list of the playsite's attractions and kids (playing and waiting in the queue)"
-        )
-        @interface GetPlaysite {}
-
-        @Operation(
-                summary = "Returns a playsite's utilization percentage"
-        )
-        @interface GetPlaysiteUtilization {}
-
     }
 
 }

@@ -6,7 +6,7 @@ import org.mtech.infrastructure.adapter.inbound.rest.api.vo.RemoveStatus;
 
 @Builder
 public record AttractionsRemoveResponse(
-        @NonNull Long id,
+        Long id,
         @NonNull RemoveStatus status
 ) {}
 
