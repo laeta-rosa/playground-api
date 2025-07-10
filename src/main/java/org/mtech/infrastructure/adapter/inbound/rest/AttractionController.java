@@ -64,7 +64,7 @@ public class AttractionController {
         var result = attractionsRemoveUseCase.invoke(toCommand(playsiteId));
 
         return switch (result) {
-            case AttractionsRemoved a -> toResponse(a.id());
+            case AttractionsRemoved a -> toResponse(a.id().value());
             case PlaysiteToRemoveAttractionsNotFound ignored -> toResponse();
         };
     }

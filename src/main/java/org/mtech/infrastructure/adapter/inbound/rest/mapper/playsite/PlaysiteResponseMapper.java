@@ -33,7 +33,7 @@ public class PlaysiteResponseMapper {
 
     public static PlaysiteAddResponse toResponse(PlaysiteAdded playsite) {
         return PlaysiteAddResponse.builder()
-                .id(playsite.id())
+                .id(playsite.id().value())
                 .status(ADDED)
                 .attractions(toAttractions(playsite.attractions()))
                 .build();
@@ -47,14 +47,14 @@ public class PlaysiteResponseMapper {
 
     public static PlaysiteRemoveResponse toResponse(PlaysiteRemoved playsite) {
         return PlaysiteRemoveResponse.builder()
-                .id(playsite.id())
+                .id(playsite.id().value())
                 .status(REMOVED)
                 .build();
     }
 
     public static PlaysiteRemoveResponse toResponse(PlaysiteNotFound playsite) {
         return PlaysiteRemoveResponse.builder()
-                .id(playsite.id())
+                .id(playsite.id().value())
                 .status(PLAYSITE_NOT_FOUND)
                 .build();
     }

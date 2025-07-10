@@ -19,6 +19,8 @@ import org.mtech.infrastructure.adapter.inbound.rest.api.response.kid.KidAddResp
 import org.mtech.infrastructure.adapter.inbound.rest.api.response.kid.KidRemoveResponse;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Random;
+
 import static org.mtech.infrastructure.adapter.inbound.rest.mapper.kid.KidCommandMapper.toCommand;
 import static org.mtech.infrastructure.adapter.inbound.rest.mapper.kid.KidAddResponseMapper.*;
 import static org.mtech.infrastructure.adapter.inbound.rest.mapper.kid.KidRemoveResponseMapper.*;
@@ -28,13 +30,14 @@ import static org.mtech.infrastructure.adapter.inbound.rest.mapper.kid.KidRemove
 @RequestMapping("/playsite")
 public class KidController {
 
+    private final Random random;
     private final KidAddUseCase kidAddUseCase;
     private final KidRemoveUseCase kidRemoveUseCase;
 
     @OpenAPI.AddKid
     @PostMapping("/{playsiteId}/kids:add")
     public KidAddResponse addKid(@PathVariable Long playsiteId, @Valid @RequestBody KidAddRequest request) {
-        var result = kidAddUseCase.invoke(toCommand(playsiteId, request));
+        var result = kidAddUseCase.invoke(toCommand(playsiteId, request, random));
 
         return switch (result) {
             case KidPlaying k -> toResponse(k);

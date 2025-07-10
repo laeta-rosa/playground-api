@@ -1,8 +1,10 @@
 package org.mtech.application.attraction.remove;
 
+import org.mtech.domain.vo.PlaysiteId;
+
 public sealed interface AttractionsRemoveCommandResult {
 
-    record AttractionsRemoved(Long id) implements AttractionsRemoveCommandResult {}
+    record AttractionsRemoved(PlaysiteId id) implements AttractionsRemoveCommandResult {}
 
     record PlaysiteToRemoveAttractionsNotFound() implements AttractionsRemoveCommandResult {}
 

@@ -27,14 +27,14 @@ public class AttractionRemoveResponseMapper {
 
     public static AttractionRemoveResponse toResponse(AttractionRemoved attraction) {
         return AttractionRemoveResponse.builder()
-                .id(attraction.id())
+                .id(attraction.id().value())
                 .status(REMOVED)
                 .build();
     }
 
     public static AttractionRemoveResponse toResponse(AttractionNotFound attraction) {
         return AttractionRemoveResponse.builder()
-                .id(attraction.id())
+                .id(attraction.id().value())
                 .status(ATTRACTION_NOT_FOUND)
                 .build();
     }

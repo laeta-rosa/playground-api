@@ -28,7 +28,8 @@ public class KidAddUseCase implements CommandUseCase<KidAddCommand, KidAddComman
     @Override
     @Transactional
     public KidAddCommandResult invoke(KidAddCommand command) {
-        return repository.findById(command.playsiteId())
+        System.out.println("Trying to fetch" + command.id().value());
+        return repository.findById(command.id().value())
                 .map(playsite -> tryAddKid(playsite, command))
                 .orElseGet(PlaysiteToAddKidNotFound::new);
     }

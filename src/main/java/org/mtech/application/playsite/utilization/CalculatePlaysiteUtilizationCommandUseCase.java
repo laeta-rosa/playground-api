@@ -22,7 +22,7 @@ public class CalculatePlaysiteUtilizationCommandUseCase implements QueryUseCaseW
 
     @Override
     public CalculatePlaysiteUtilizationCommandResult invoke(PlaysiteQuery query) {
-        var playsite = repository.findById(query.id());
+        var playsite = repository.findById(query.id().value());
         return playsite
                 .map(this::calculateUtilization)
                 .orElse(new PlaysiteToCalculateUtilizationNotFound(query.id()));

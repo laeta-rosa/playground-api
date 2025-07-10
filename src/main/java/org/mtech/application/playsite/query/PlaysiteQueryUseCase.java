@@ -15,7 +15,7 @@ public class PlaysiteQueryUseCase implements QueryUseCaseWithRequest<PlaysiteQue
 
     @Override
     public PlaysiteQueryResult invoke(PlaysiteQuery query) {
-        var playsite = repository.findById(query.id());
+        var playsite = repository.findById(query.id().value());
         return playsite
                 .<PlaysiteQueryResult>map(PlaysiteFound::new)
                 .orElse(new PlaysiteNotFound(query.id()));

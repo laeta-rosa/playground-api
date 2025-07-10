@@ -2,6 +2,7 @@ package org.mtech.infrastructure.adapter.inbound.rest.mapper.kid;
 
 import lombok.experimental.UtilityClass;
 import org.mtech.application.kid.remove.KidRemoveCommand;
+import org.mtech.domain.vo.PlaysiteId;
 import org.mtech.infrastructure.adapter.inbound.rest.api.request.kid.KidAddRequest;
 import org.mtech.infrastructure.adapter.inbound.rest.api.request.kid.KidAddRequest.RequestKid;
 import org.mtech.application.kid.add.KidAddCommand;
@@ -13,11 +14,11 @@ import java.util.Random;
 @UtilityClass
 public class KidCommandMapper {
 
-    public static KidAddCommand toCommand(long playsiteId, KidAddRequest request) {
+    public static KidAddCommand toCommand(long id, KidAddRequest request, Random random) {
         return KidAddCommand.builder()
-                .playsiteId(playsiteId)
+                .id(PlaysiteId.of(id))
                 .kid(toKid(request.kid()))
-                .acceptQueue(new Random().nextBoolean())
+                .acceptQueue(random.nextBoolean())
                 .build();
     }
 

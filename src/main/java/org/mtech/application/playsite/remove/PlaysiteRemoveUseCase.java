@@ -17,8 +17,8 @@ public class PlaysiteRemoveUseCase implements CommandUseCase<PlaysiteRemoveComma
     @Override
     @Transactional
     public PlaysiteRemoveCommandResult invoke(PlaysiteRemoveCommand command) {
-        if (repository.existsById(command.id())) {
-            repository.deleteById(command.id());
+        if (repository.existsById(command.id().value())) {
+            repository.deleteById(command.id().value());
             return new PlaysiteRemoved(command.id());
         } else {
             return new PlaysiteNotFound(command.id());

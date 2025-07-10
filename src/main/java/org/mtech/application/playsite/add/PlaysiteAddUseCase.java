@@ -1,6 +1,7 @@
 package org.mtech.application.playsite.add;
 
 import lombok.RequiredArgsConstructor;
+import org.mtech.domain.vo.PlaysiteId;
 import org.mtech.infrastructure.adapter.outbound.database.repository.PlaysiteRepository;
 import org.mtech.application.playsite.add.PlaysiteAddCommandResult.PlaysiteAdded;
 import org.mtech.application.playsite.add.PlaysiteAddCommandResult.PlaysiteAttractionCapacityExceeded;
@@ -24,7 +25,7 @@ public class PlaysiteAddUseCase implements CommandUseCase<PlaysiteAddCommand, Pl
         }
 
         var playsite = repository.save(command.playsite());
-        return new PlaysiteAdded(playsite.getId(), playsite.getAttractions());
+        return new PlaysiteAdded(PlaysiteId.of(playsite.getId()), playsite.getAttractions());
     }
 
 }

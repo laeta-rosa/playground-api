@@ -22,7 +22,7 @@ public class AttractionAddUseCase implements CommandUseCase<AttractionAddCommand
     @Override
     @Transactional
     public AttractionAddCommandResult invoke(AttractionAddCommand command) {
-        var playsite = repository.findById(command.playsiteId());
+        var playsite = repository.findById(command.id().value());
         return playsite
                 .map(p -> addAttractions(p, command))
                 .orElseGet(PlaysiteToAddAttractionNotFound::new);

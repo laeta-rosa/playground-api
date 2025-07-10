@@ -1,6 +1,7 @@
 package org.mtech.infrastructure.adapter.inbound.rest.mapper.playsite;
 
 import lombok.experimental.UtilityClass;
+import org.mtech.domain.vo.PlaysiteId;
 import org.mtech.infrastructure.adapter.inbound.rest.api.request.attraction.AttractionAddRequest.RequestAttraction;
 import org.mtech.infrastructure.adapter.inbound.rest.api.request.playsite.PlaysiteAddRequest;
 import org.mtech.infrastructure.adapter.inbound.rest.api.request.playsite.PlaysiteRemoveRequest;
@@ -33,7 +34,7 @@ public class PlaysiteCommandMapper {
 
     public static PlaysiteRemoveCommand toCommand(PlaysiteRemoveRequest request) {
         return PlaysiteRemoveCommand.builder()
-                .id(request.id())
+                .id(PlaysiteId.of(request.id()))
                 .build();
     }
 

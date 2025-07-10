@@ -2,10 +2,10 @@
 plugin-dependency-management = "1.1.7"
 plugin-spring-boot = "3.5.3"
 
-postgresql = "42.7.7"
-spring-doc = "2.8.9"
+library-postgresql = "42.7.7"
+library-spring-doc = "2.8.9"
 
-junit-bom = "5.13.3"
+platform-junit-bom = "5.13.3"
 
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "plugin-spring-boot" }
@@ -14,19 +14,18 @@ spring-dependency-management = { id = "io.spring.dependency-management", version
 [libraries]
 processor-lombok = { group = "org.projectlombok", name = "lombok" }
 
-database-postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "postgresql" }
+database-postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "library-postgresql" }
 
 spring-boot-starter = { group = "org.springframework.boot", name = "spring-boot-starter" }
 spring-boot-starter-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa" }
 spring-boot-starter-validation = { group = "org.springframework.boot", name = "spring-boot-starter-validation" }
 spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web" }
 spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test" }
-spring-doc-open-api = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui", version.ref = "spring-doc"}
+spring-doc-open-api = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui", version.ref = "library-spring-doc"}
 
-junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit-bom"}
-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter" }
-
-h2 = { group = "com.h2database", name = "h2"}
+test-junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "platform-junit-bom"}
+test-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter" }
+test-h2 = { group = "com.h2database", name = "h2"}
 
 [bundles]
 database = [
@@ -44,6 +43,6 @@ spring = [
     "spring-doc-open-api"
 ]
 test = [
-    "junit-jupiter",
-    "h2"
+    "test-junit-jupiter",
+    "test-h2"
 ]
