@@ -73,7 +73,7 @@ public class AttractionController {
     private static class OpenAPI {
 
         @Operation(
-                summary = "Adds an attraction to the playsite"
+                summary = "Adds an attraction to the playsite. Allowed attractions are double swings, carousel, slide, ball pit"
         )
         @interface AddAttraction {}
 

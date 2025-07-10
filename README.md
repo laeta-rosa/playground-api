@@ -53,6 +53,13 @@ docker-compose up --build
   playsite.attractions.max-count
   ```
   Attempts to exceed this configured maximum are gracefully rejected with an appropriate response status.
+- **Allowed Attraction Names**
+
+  When adding attraction please ensure the name is one of the allowed attraction names (case-insensitive): 
+  - double swings 
+  - carousel 
+  - slide 
+  - ball pit
 
 
 ## Further improvements: 
