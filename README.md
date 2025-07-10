@@ -2,7 +2,7 @@
 
 REST API to manage the playground. 
 - API creates and manages play sites in the playground
-- API allocates kids to play sites in the playground.
+- API allocates kids to play sites in the playground
 
 ![hippo](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGh6dGN3czFiamc2dGtiYWZkMWZmOW94ejNuNGI5cXI2ZWE5MHI0aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/nSsP0WaX7XPZo45cwI/giphy.gif)
 
@@ -19,7 +19,7 @@ The project requires the following components to be installed on the computer:
 
 ## Usage
 
-Run the following command to build the project from scratch and start necessary Docker containers
+Run the following command to build the project from scratch and start necessary Docker containers:
 ```
 docker-compose up --build
 ```
